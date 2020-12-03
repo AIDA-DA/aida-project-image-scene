@@ -58,7 +58,7 @@ We will build an image classifier, using the Intel Image Classificaion dataset. 
         <td></td>
     </tr>
     <tr>
-        <td>MobileNetV2</td>
+        <td>MobileNetV2 Baseline</td>
         <td>150</td>
         <td>ImageNet FineTuning - first layers</td>
         <td>yes</td>
@@ -66,19 +66,19 @@ We will build an image classifier, using the Intel Image Classificaion dataset. 
         <td>0,2416</td>
     </tr>
     <tr>
-        <td>Simple Conv Oliver</td>
-        <td>150</td>
-        <td>Training from Scratch</td>
-        <td>no</td>
-        <td>84,70%</td>
-        <td>0,5192</td>
-    </tr>
-    <tr>
-        <td>Simple Conv Oliver</td>
+        <td>Simple Conv Baseline</td>
         <td>150</td>
         <td>Training from Scratch</td>
         <td>yes</td>
         <td>86,93%</td>
-        <td>0,4044
+        <td>0,4044        
+    </tr>
+    <tr>
+        <td>Simple Conv Baseline</td>
+        <td>150</td>
+        <td>Training from Scratch</td>
+        <td>no</td>
+        <td>84,70%</td>
+        <td>0,5192</td>        
     </tbody>
 </table>
