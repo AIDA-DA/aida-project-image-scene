@@ -1,14 +1,16 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[45]:
+# In[8]:
 
 
 import pandas as pd
 
 
-# In[46]:
+# In[9]:
 
+
+#load testsets
 
 df_1 = pd.read_csv('df_3924.csv')
 df_2 = pd.read_csv('df_3925.csv')
@@ -19,14 +21,14 @@ df_test = pd.read_csv('df_test.csv')
 liste = [df_2, df_3, df_4, df_test, df_5]
 
 
-# In[47]:
+# In[10]:
 
 
 df_1 = df_1.append(liste, ignore_index = True)
 df_1
 
 
-# In[48]:
+# In[11]:
 
 
 class_names = ['glacier', 'forest', 'street', 'buildings', 'mountain', 'sea']
@@ -38,13 +40,13 @@ for k in class_names:
 df_1
 
 
-# In[49]:
+# In[12]:
 
 
 df_1['labls'].nunique()
 
 
-# In[50]:
+# In[13]:
 
 
 df_1["labls"] = df_1["labls"].astype('category')
@@ -54,58 +56,64 @@ df_1.head()
 df_1.to_csv('dataset_total.csv')
 
 
-# In[51]:
+# In[14]:
 
 
 df_1
 
 
-# In[52]:
+# In[9]:
 
 
 df_1.to_numpy()
 
 
-# In[18]:
+# In[15]:
 
 
 import numpy as np
 import sys
+import random
 get_ipython().system('{sys.executable} -m pip install sklearn')
 
 from sklearn.svm import SVC
 from sklearn.model_selection import train_test_split
-
-
+from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
+
 X = df_1.iloc[:,0:4095].values
 y = df_1["labls"]
 
 
-# commonly done in classification: stratify by target variable y
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
 
-print(X_train.shape)
-print(X_test.shape)
+
 
 from sklearn import svm
 
 clf = svm.SVC(kernel='linear') # Linear Kernel
-
-clf.fit(X_train, y_train)
-#Create a svm Classifier
-
+#clf = LogisticRegression(random_state=0, max_iter = 2000).fit(X_train, y_train)
 
 #Train the model using the training sets
+clf.fit(X_train, y_train)
 
+
+#print accuracy score for test set
 a=clf.score(X_test, y_test)
-#Predict the response for test dataset
+print(a, r, )
+
+#Predict the response for whole dataset
 y_pred = clf.predict(X_test)
-print(a)
+
+# write predictions to a new dataframe column
+df_1['predicit_class'] = ypred
 
 
-# In[44]:
+# In[ ]:
 
+
+#same procedure as above for alternative Classifier (logistic Regression)
 
 from sklearn.datasets import load_iris
 from sklearn.linear_model import LogisticRegression
@@ -120,43 +128,4 @@ clf.predict_proba(X_test)
 
 
 clf.score(X_test, y_test)
-
-
-# In[53]:
-
-
-X = df_1.iloc[:,0:4095].values
-y = df_1["labls"]
-
-
-# In[54]:
-
-
-from sklearn.cluster import KMeans
-import numpy as np
-X = df_1.iloc[:,0:4095].values
-kmeans = KMeans(n_clusters=6, random_state=0).fit(X)
-kmeans.labels_
-
-df_1['cluster']=kmeans.predict(X)
-
-kmeans.cluster_centers_
-
-
-# In[21]:
-
-
-df_1
-
-
-# In[56]:
-
-
-pd.crosstab(df_1.cluster, df_1.labls,margins=True)
-
-
-# In[ ]:
-
-
-
 
