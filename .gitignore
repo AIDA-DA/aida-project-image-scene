@@ -128,13 +128,11 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# Kaggle and Dataset
-kaggle.json
+# Downloaded Dataset
 dataset
 
-# Models
-models/model_ftv2_RN50
-*.tgz
+# Kaggle Credentials
+kaggle.json
 
 # Models
 models/model_ftv2_RN50
