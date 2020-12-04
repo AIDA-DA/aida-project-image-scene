@@ -1,3 +1,4 @@
+![](images/header.png)
 # Scene Classification for the Intel Scene Classification Challenge
 We will build an image classifier, using the Intel Image Classificaion dataset. The dataset contains 25k images of the 6 categories. Our goal is to develop an algorithm which can distinguish the different image categories. In this approach we will use Tensorflow Keras together with pretained models provided by the framework.
 
@@ -51,11 +52,19 @@ We will build an image classifier, using the Intel Image Classificaion dataset. 
     </tr>
     <tr>
         <td>ResNet-50</td>
-        <td>224</td>
+        <td>150</td>
         <td>Training from Scratch</td>
         <td>yes</td>
-        <td></td>
-        <td></td>
+        <td>79,93%</td>
+        <td>0,5737</td>
+    </tr>
+    <tr>
+        <td>ResNet-50-Ensemble</td>
+        <td>150</td>
+        <td>Ensebling 4-KFold FineTuning Models</td>
+        <td>yes</td>
+        <td>93,70%</td>
+        <td>0,2120</td>
     </tr>
     <tr>
         <td>MobileNetV2 Baseline</td>
