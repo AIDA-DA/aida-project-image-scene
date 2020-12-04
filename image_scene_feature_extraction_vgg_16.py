@@ -4,6 +4,8 @@
 # In[1]:
 
 
+#imports
+
 import tensorflow as tf
 import numpy as np
 import os
@@ -23,6 +25,8 @@ import imageio
 
 # In[2]:
 
+
+##path to training data
 
 images_dir = 'archive/seg_train/seg_train'
 class_names = os.listdir(images_dir)
@@ -98,7 +102,7 @@ plt.title('Class distribution');
 # In[9]:
 
 
-
+## some example plots
 plt.figure(figsize=(20, 20))
 for image, label in train_generator_l:
  
@@ -110,12 +114,6 @@ for image, label in train_generator_l:
     ax.set_title(class_names[np.argmax(label[i])])
     ax.axis("off")
   break
-
-
-# In[ ]:
-
-
-image
 
 
 # In[ ]:
@@ -146,6 +144,7 @@ import glob
 # In[12]:
 
 
+#path to training images
 trainingsbilder = glob.glob("archive/seg_train/seg_train/*/*.jpg")
 
 
@@ -155,23 +154,37 @@ trainingsbilder = glob.glob("archive/seg_train/seg_train/*/*.jpg")
 len(trainingsbilder)
 
 
-# In[16]:
+# In[14]:
 
+
+#keras imports
 
 from keras.preprocessing.image import load_img
 from keras.preprocessing.image import img_to_array
-from keras.applications.vgg16 import preprocess_input
+#from keras.applications.vgg16 import preprocess_input
 from keras.applications.vgg16 import decode_predictions
 from keras.applications.vgg16 import VGG16
-from keras.models import Model
+from keras.applications.resnet50 import ResNet50
+from keras.applications.resnet import preprocess_input
+
 from pickle import dump
 
 
 # In[ ]:
 
 
-bilderstapel_3925=[]
-for k in trainingsbilder[3925:14034]:  
+
+
+
+# In[ ]:
+
+
+#predict feature vector for any training image from the -2 layer of the vgg16
+# done in batches of max 5000 pictures due to memory load
+
+
+bilderstapel_1=[]
+for k in trainingsbilder[0:5000]:  
     
    
     # load an image from file
@@ -189,41 +202,159 @@ for k in trainingsbilder[3925:14034]:
     # get extracted features
     features = model.predict(image)
     features = np.append(features, k)
-    bilderstapel_3925.append(features)
+    bilderstapel_1.append(features)
     print(k)
-    print(len(bilderstapel_3925))
+    print(len(bilderstapel_1))
     # save to file
     #dump(features, open('dog.pkl', 'wb'))
     print(features)
 
+print(len(bilderstapel_1))
+array_bilder_1 = np.array(bilderstapel_1)
+import pandas as pd
+df_1 = pd.DataFrame(array_bilder_1)
+df_1.to_csv('df_1.csv')
 
-# In[47]:
+
+# In[ ]:
 
 
-print(len(bilderstapel))
-array_bilder_3925 = np.array(bilderstapel_3925)
+bilderstapel_5000=[]
+for k in trainingsbilder[5001:8000]:  
+    
+   
+    # load an image from file
+    image = load_img(k, target_size=(224, 224))
+    # convert the image pixels to a numpy array
+    image = img_to_array(image)
+    # reshape data for the model
+    image = image.reshape((1, image.shape[0], image.shape[1], image.shape[2]))
+    # prepare the image for the VGG model
+    image = preprocess_input(image)
+    # load model
+    model = VGG16()
+    # remove the output layer
+    model = Model(inputs=model.inputs, outputs=model.layers[-2].output)
+    # get extracted features
+    features = model.predict(image)
+    features = np.append(features, k)
+    bilderstapel_5000.append(features)
+    print(k)
+    print(len(bilderstapel_5000))
+ 
+    print(features)
+    
+array_bilder_5000 = np.array(bilderstapel_5000)
+import pandas as pd
+df_5000 = pd.DataFrame(array_bilder_5000)
+df_5000
+df_5000.to_csv('df_5000.csv')
 
 
-# In[48]:
+# In[ ]:
+
+
+bilderstapel_8000=[]
+for k in trainingsbilder[8001:11000]:  
+    
+   
+    # load an image from file
+    image = load_img(k, target_size=(224, 224))
+    # convert the image pixels to a numpy array
+    image = img_to_array(image)
+    # reshape data for the model
+    image = image.reshape((1, image.shape[0], image.shape[1], image.shape[2]))
+    # prepare the image for the VGG model
+    image = preprocess_input(image)
+    # load model
+    model = VGG16()
+    # remove the output layer
+    model = Model(inputs=model.inputs, outputs=model.layers[-2].output)
+    # get extracted features
+    features = model.predict(image)
+    features = np.append(features, k)
+    bilderstapel_8000.append(features)
+    print(k)
+    print(len(bilderstapel_8000))
+    # save to file
+    #dump(features, open('dog.pkl', 'wb'))
+    print(features)
+    
+array_bilder_8000 = np.array(bilderstapel_8000)
+import pandas as pd
+df_8000 = pd.DataFrame(array_bilder_8000)
+df_8000
+df_8000.to_csv('df_8000.csv')
+
+
+# In[ ]:
+
+
+bilderstapel_11001=[]
+for k in trainingsbilder[11001:14034]:  
+    
+   
+    # load an image from file
+    image = load_img(k, target_size=(224, 224))
+    # convert the image pixels to a numpy array
+    image = img_to_array(image)
+    # reshape data for the model
+    image = image.reshape((1, image.shape[0], image.shape[1], image.shape[2]))
+    # prepare the image for the VGG model
+    image = preprocess_input(image)
+    # load model
+    model = VGG16()
+    # remove the output layer
+    model = Model(inputs=model.inputs, outputs=model.layers[-2].output)
+    # get extracted features
+    features = model.predict(image)
+    features = np.append(features, k)
+    bilderstapel_11001.append(features)
+    print(k)
+    print(len(bilderstapel_11001))
+    # save to file
+    #dump(features, open('dog.pkl', 'wb'))
+    print(features)
+    
+array_bilder_11001 = np.array(bilderstapel_11001)
+import pandas as pd
+df_11001 = pd.DataFrame(array_bilder_11001)
+df_11001
+df_11001.to_csv('df_11001.csv')
+
+
+# In[ ]:
+
+
+# Concat all datasets to one Dataframe for further analysis
+
+df_1 = pd.read_csv('df_1.csv')
+df_2  = pd.read_csv('df_5000.csv')
+df_3  = pd.read_csv('df_8000.csv')
+df_4  = pd.read_csv('df_11001.csv')
+df_test = pd.read_csv('df_test.csv')
+liste = [df_1, df_2, df_3, df_4]
+df_1 = df_1.append(liste, ignore_index = True)
+df_total = df_1
+
+
+# In[26]:
 
 
 import pandas as pd
-df_3925 = pd.DataFrame(array_bilder_3925)
+df_total = pd.read_csv('dataset_total.csv')
 
 
-# In[50]:
+# In[27]:
 
 
-
-df_3925.to_csv('df_3925.csv')
-
-
-# In[46]:
+df_total
 
 
-df_glacier = df[df[4096].str.contains("glacier")] 
-df_glacier['label'] = 'glacier'  
-df_glacier
+# In[35]:
+
+
+df_total.labls_num.unique()
 
 
 # In[ ]:
