@@ -136,3 +136,7 @@ dataset
 models/model_ftv2_RN50
 *.tgz
 
+# Models
+models/model_ftv2_RN50
+*.tgz
+
