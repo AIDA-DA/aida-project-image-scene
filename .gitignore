@@ -131,3 +131,8 @@ dmypy.json
 # Kaggle and Dataset
 kaggle.json
 dataset
+
+# Models
+models/model_ftv2_RN50
+*.tgz
+
